@@ -15,7 +15,7 @@ export default function coverMarkGen(icon, big_min_size) {
             update : {
                 opacity : [
                     { test : "!length(data('selected')) || indata('selected', 'value', datum.type)", value : 1 },
-                    { value : 0.2 }
+                    { value : 0.05 }
                 ],
                 fill : icon ? { value : "black" } : [
                     { test : "datum.size < " + big_min_size.toString(), value : "black" },

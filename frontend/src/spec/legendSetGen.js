@@ -49,7 +49,13 @@ export default function legendSetGen(emoji) {
                 { label : "服务区", value : "#b89a93" },
                 { label : "当前所在地区", value : "#609f3a" },
                 { label : "吨级", value : "#e38e24" },
-                { label : "机型", value : "#b4c6e6" }
+                { label : "机型", value : "#b4c6e6" },
+                { label : "车龄", value : "#39a89b" },
+                { label : "工作种类", value : "#a0f963" },
+                { label : "品牌", value : "#ee3284" },
+                { label : "代理店", value : "#d9aeff" },
+                { label : "服务成本", value : "#123456" },
+                { label : "人", value : "#654321" }
             ]
         });
     } else {
@@ -101,7 +107,13 @@ export default function legendSetGen(emoji) {
                 { label : "服务区", value : "🗺️" },
                 { label : "当前所在地区", value : "📍" },
                 { label : "吨级", value : "⚖️" },
-                { label : "机型", value : "🔑" }
+                { label : "机型", value : "🔑" },
+                { label : "车龄", value : "📅" },
+                { label : "工作种类", value : "🗃" },
+                { label : "品牌", value : "®️" },
+                { label : "代理店", value : "🎩" },
+                { label : "服务成本", value : "💸" },
+                { label : "人", value : "👤" }
             ]
         });
     }

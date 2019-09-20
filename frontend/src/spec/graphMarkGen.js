@@ -20,7 +20,7 @@ export default function graphMarkGen(icon) {
                     ],
                     opacity : [
                         { test : "!length(data('selected')) || indata('selected', 'value', datum.type)", value : 1 },
-                        { value : 0.2 }
+                        { value : 0.05 }
                     ],
                     xc : { scale : "xscale", field : "x" },
                     yc : { scale : "yscale", field : "y" }}
@@ -44,7 +44,7 @@ export default function graphMarkGen(icon) {
                     ],
                     opacity : [
                         { test : "!length(data('selected')) || indata('selected', 'value', datum.type)", value : 1 },
-                        { value : 0.2 }
+                        { value : 0.05 }
                     ],
                     xc : { scale : "xscale", field : "x" },
                     yc : { scale : "yscale", field : "y" }
@@ -72,7 +72,7 @@ export default function graphMarkGen(icon) {
                 update : {
                     opacity : [
                         { test : "!length(data('selected')) || indata('selected', 'value', datum.type)", value : 1 },
-                        { value : 0.2 }
+                        { value : 0.05 }
                     ],
                     xc : { scale : "xscale", field : "x" },
                     yc : { scale : "yscale", field : "y" },
@@ -92,6 +92,7 @@ export default function graphMarkGen(icon) {
         from : { data : "links" },
         encode : {
             enter : {
+                tooltip : { signal : "{ title:datum.s.name + '---[' + datum.type + ']-->' + datum.t.name }" },
                 stroke : { scale : "linkclr", field : "type" },
                 strokeWidth : { value : 2 }
             },
@@ -104,7 +105,7 @@ export default function graphMarkGen(icon) {
                     { test : "nodehover === null && nodefocus == null && !length(data('selected'))", value : 0.8 },
                     { test : "!length(data('selected')) && (datum.si === nodehover || datum.ti === nodehover || datum.si === nodefocus || datum.ti === nodefocus)", value : 1 },
                     { test : "indata('selected', 'value', datum.s.type) && indata('selected', 'value', datum.t.type)", value : 1},
-                    { value : 0.07 }
+                    { value : 0.05 }
                 ]
             }
         }
@@ -124,7 +125,7 @@ export default function graphMarkGen(icon) {
                     { test : "nodehover === null && nodefocus == null && !length(data('selected'))", value : 0.8 },
                     { test : "!length(data('selected')) && (datum.si === nodehover || datum.ti === nodehover || datum.si === nodefocus || datum.ti === nodefocus)", value : 1 },
                     { test : "indata('selected', 'value', datum.s.type) && indata('selected', 'value', datum.t.type)", value : 1},
-                    { value : 0.07 }],
+                    { value : 0.05 }],
                 xc : [
                     { test : "datum.sx === datum.tx", signal : "scale('xscale', datum.tx)" },
                     { test : "datum.sx < datum.tx", signal : "scale('xscale', datum.tx) - (sqrt(datum.t.size) / 2 + 10 / 3 * sqrt(3)) * sin(PI / 2 - atan2(-scale('yscale', datum.ty) + scale('yscale', datum.sy), scale('xscale', datum.tx) - scale('xscale', datum.sx)))" },
