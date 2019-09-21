@@ -95,6 +95,15 @@ export default function specInit(param, icon) {
                     }
                 ]
             },{
+                name : "sizeZoom",
+                update : 1,
+                on : [
+                    {
+                        events : { signal : "xdom" },
+                        update : "1 / (xdom[1] - xdom[0])"
+                    }
+                ]
+            },{
                 name : "xcur",
                 value : null,
                 on : [ { events : "mousedown", update : "slice(xdom)" } ]
@@ -107,10 +116,10 @@ export default function specInit(param, icon) {
                 value : null,
                 on : [
                     {
-                        events : icon ? "@nodelabel:mouseover, @iconnode:mouseover" :"@nodelabel:mouseover, @bignode:mouseover, @smallnode:mouseover",
+                        events : icon ? "@nodelabel:mouseover, @iconnode:mouseover" :"@nodelabel:mouseover, @node:mouseover",
                         update : "datum.index"
                     },{
-                        events : icon ? "nodelabel:mouseout, @iconnode:mouseout" : "@nodelabel:mouseout, @bignode:mouseout, @smallnode:mouseout",
+                        events : icon ? "nodelabel:mouseout, @iconnode:mouseout" : "@nodelabel:mouseout, @node:mouseout",
                         update : "null"
                     }
                 ]
@@ -119,7 +128,7 @@ export default function specInit(param, icon) {
                 value : null,
                 on : [
                     {
-                        events : icon ? "@nodelabel:click, @iconnode:click" : "@nodelabel:click, @bignode:click, @smallnode:click",
+                        events : icon ? "@nodelabel:click, @iconnode:click" : "@nodelabel:click, @node:click",
                         update : "datum.index"
                     },{
                         events : "mouseup[!event.item]",
@@ -130,7 +139,7 @@ export default function specInit(param, icon) {
                 name : "noderearrange",
                 value : null,
                 on : [
-                    { events : icon ? "@nodelabel:dblclick, @iconnode:dblclick" : "@nodelabel:dblclick, @bignode:dblclick, @smallnode:dblclick", update : "datum.index" },
+                    { events : icon ? "@nodelabel:dblclick, @iconnode:dblclick" : "@nodelabel:dblclick, @node:dblclick", update : "datum.index" },
                     { events : "mouseup[!event.item]", update : "null" }
                 ]
             },{

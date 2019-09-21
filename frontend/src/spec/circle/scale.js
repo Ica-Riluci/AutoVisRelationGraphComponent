@@ -13,6 +13,6 @@ export default function unscale(param, debug) {
     var graph = specInit(param);
     graph.data = graph.data.concat(graphGen(false, 1600, false), legendSetGen(false));
     graph.scales = graph.scales.concat(legendScaleGen(false));
-    graph.marks = graph.marks.concat(graphMarkGen(false, false, 1600)).concat(coverMarkGen(false, false, 1600));
+    graph.marks = graph.marks.concat(graphMarkGen(false, true, 1600)).concat(coverMarkGen(true, false, 1600));
     return graph;
 }

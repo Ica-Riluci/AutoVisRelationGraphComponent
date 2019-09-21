@@ -1,54 +1,32 @@
-export default function graphMarkGen(icon) {
+export default function graphMarkGen(icon, scalable, big_min_size) {
     var ret = [];
     ret.push(
         {
-            name : "bignode",
+            name : "node",
             zindex : 3,
             type : "symbol",
-            from : { data : "bignodes" },
+            from : { data : "nodes" },
             encode : {
                 enter : {
                     tooltip : { signal : "merge({ title : datum.detail.display_name }, datum.detail)" },
-                    size : { field : "size" },
                     fill : icon ? { value : "white" } : { scale : "nodeclr", field : "type" },
                     stroke : { scale : "nodeclr", field : "type" }
                 },
                 update : {
-                    strokeWidth : icon ? { value : 0} : [
-                        { test : "datum.index === nodehover || datum.index === nodefocus", value : 7 },
+                    strokeWidth : scalable ? (icon ? { value : 0} : [
+                        { test : "datum.index === nodehover || datum.index === nodefocus", signal : "if(datum.size * sizeZoom * sizeZoom >=" + big_min_size.toString() + ", 7, 2)" },
                         { value : 0 }
-                    ],
+                    ]) : (icon ? { value : 0} : [
+                        { test : "datum.index === nodehover || datum.index === nodefocus", signal : "if(datum.size >=" + big_min_size.toString() + ", 7, 2)" },
+                        { value : 0 }
+                    ]),
+                    size : scalable ? { signal : "datum.size * sizeZoom * sizeZoom" } : { field : "size" },
                     opacity : [
                         { test : "!length(data('selected')) || indata('selected', 'value', datum.type)", value : 1 },
                         { value : 0.05 }
                     ],
                     xc : { scale : "xscale", field : "x" },
                     yc : { scale : "yscale", field : "y" }}
-            }
-        },{
-            name : "smallnode",
-            zindex : 3,
-            type : "symbol",
-            from : { data : "smallnodes" },
-            encode : {
-                enter : {
-                    tooltip : { signal : "merge({ title : datum.detail.display_name }, datum.detail)" },
-                    size : { field : "size" },
-                    fill : icon ? { value : "white" } : { scale : "nodeclr", field : "type" },
-                    stroke : { scale : "nodeclr", field : "type" }
-                },
-                update : {
-                    strokeWidth : icon ? { value : 0 } : [
-                        { test : "datum.index === nodehover || datum.index === nodefocus", value : 2 },
-                        { value : 0 }
-                    ],
-                    opacity : [
-                        { test : "!length(data('selected')) || indata('selected', 'value', datum.type)", value : 1 },
-                        { value : 0.05 }
-                    ],
-                    xc : { scale : "xscale", field : "x" },
-                    yc : { scale : "yscale", field : "y" }
-                }
             }
         }
     );
@@ -76,8 +54,11 @@ export default function graphMarkGen(icon) {
                     ],
                     xc : { scale : "xscale", field : "x" },
                     yc : { scale : "yscale", field : "y" },
-                    fontSize : [
-                        { test : "datum.index === nodehover || nodefocus == datum.index", signal : "sqrt(datum.size) * 0.9" },
+                    fontSize : scalable ? [
+                        { test : "datum.index === nodehover || nodefocus === datum.index", signal : "sqrt(datum.size * sizeZoom * sizeZoom * 0.9"},
+                        { signal : "sqrt(datum.size * sizeZoom * sizeZoom) * 0.8" }
+                    ] : [
+                        { test : "datum.index === nodehover || nodefocus === datum.index", signal : "sqrt(datum.size) * 0.9" },
                         { signal : "sqrt(datum.size) * 0.8" }
                     ]
                 }
@@ -126,12 +107,21 @@ export default function graphMarkGen(icon) {
                     { test : "!length(data('selected')) && (datum.si === nodehover || datum.ti === nodehover || datum.si === nodefocus || datum.ti === nodefocus)", value : 1 },
                     { test : "indata('selected', 'value', datum.s.type) && indata('selected', 'value', datum.t.type)", value : 1},
                     { value : 0.05 }],
-                xc : [
+                xc : scalable ? [
+                    { test : "datum.sx === datum.tx", signal : "scale('xscale', datum.tx)" },
+                    { test : "datum.sx < datum.tx", signal : "scale('xscale', datum.tx) - (sqrt(datum.t.size * sizeZoom * sizeZoom) / 2 + 10 / 3 * sqrt(3)) * sin(PI / 2 - atan2(-scale('yscale', datum.ty) + scale('yscale', datum.sy), scale('xscale', datum.tx) - scale('xscale', datum.sx)))" },
+                    { signal : "scale('xscale', datum.tx) - (sqrt(datum.t.size * sizeZoom * sizeZoom) / 2 + 10 / 3 * sqrt(3)) * sin(-PI / 2 - atan2(scale('yscale', datum.ty) - scale('yscale', datum.sy), scale('xscale', datum.sx) - scale('xscale', datum.tx)))" }
+                ] : [
                     { test : "datum.sx === datum.tx", signal : "scale('xscale', datum.tx)" },
                     { test : "datum.sx < datum.tx", signal : "scale('xscale', datum.tx) - (sqrt(datum.t.size) / 2 + 10 / 3 * sqrt(3)) * sin(PI / 2 - atan2(-scale('yscale', datum.ty) + scale('yscale', datum.sy), scale('xscale', datum.tx) - scale('xscale', datum.sx)))" },
                     { signal : "scale('xscale', datum.tx) - (sqrt(datum.t.size) / 2 + 10 / 3 * sqrt(3)) * sin(-PI / 2 - atan2(scale('yscale', datum.ty) - scale('yscale', datum.sy), scale('xscale', datum.sx) - scale('xscale', datum.tx)))" }
                 ],
-                yc : [
+                yc : scalable ? [
+                    { test : "datum.sy < datum.ty && datum.sx === datum.tx", signal : "scale('yscale', datum.ty) + sqrt(datum.t.size * sizeZoom * sizeZoom) / 2" },
+                    { test : "datum.sy > datum.ty && datum.sx === datum.ty", signal : "scale('yscale', datum.ty) - sqrt(datum.t.size * sizeZoom * sizeZoom) / 2" },
+                    { test : "datum.sx < datum.tx", signal : "scale('yscale', datum.ty) + (sqrt(datum.t.size * sizeZoom * sizeZoom) / 2 + 10 / 3 * sqrt(3)) * cos(PI / 2 - atan2(-scale('yscale', datum.ty) + scale('yscale', datum.sy), scale('xscale', datum.tx) - scale('xscale', datum.sx)))" },
+                    { signal : "scale('yscale', datum.ty) + (sqrt(datum.t.size * sizeZoom * sizeZoom) / 2 + 10 / 3 * sqrt(3)) * cos(-PI / 2 - atan2(scale('yscale', datum.ty) - scale('yscale', datum.sy), scale('xscale', datum.sx) - scale('xscale', datum.tx)))" }
+                ] : [
                     { test : "datum.sy < datum.ty && datum.sx === datum.tx", signal : "scale('yscale', datum.ty) + sqrt(datum.t.size) / 2" },
                     { test : "datum.sy > datum.ty && datum.sx === datum.ty", signal : "scale('yscale', datum.ty) - sqrt(datum.t.size) / 2" },
                     { test : "datum.sx < datum.tx", signal : "scale('yscale', datum.ty) + (sqrt(datum.t.size) / 2 + 10 / 3 * sqrt(3)) * cos(PI / 2 - atan2(-scale('yscale', datum.ty) + scale('yscale', datum.sy), scale('xscale', datum.tx) - scale('xscale', datum.sx)))" },

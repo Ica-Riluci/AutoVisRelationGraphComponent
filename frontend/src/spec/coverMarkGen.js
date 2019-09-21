@@ -1,4 +1,4 @@
-export default function coverMarkGen(icon, big_min_size) {
+export default function coverMarkGen(scalable, icon, big_min_size) {
     var ret = [];
     console.log("generating cover");
     ret.push({
@@ -17,32 +17,50 @@ export default function coverMarkGen(icon, big_min_size) {
                     { test : "!length(data('selected')) || indata('selected', 'value', datum.type)", value : 1 },
                     { value : 0.05 }
                 ],
-                fill : icon ? { value : "black" } : [
+                fill : scalable ? (icon ? { value : "black" } : [
+                    { test : "datum.size * sizeZoom * sizeZoom < " + big_min_size.toString(), value : "black" },
+                    { value : "white" }
+                ]) : (icon ? { value : "black" } : [
                     { test : "datum.size < " + big_min_size.toString(), value : "black" },
                     { value : "white" }
-                ],
+                ]),
                 xc : { scale : "xscale", field : "x" },
                 yc : { scale : "yscale", field : "y" },
-                align : icon ? { value : "center" } : [
+                align : scalable ? (icon ? { value : "center" } : [
+                    { test : "datum.size * sizeZoom * sizeZoom < " + big_min_size.toString(), value : "left" },
+                    { value : "center" }
+                ]) : (icon ? { value : "center" } : [
                     { test : "datum.size < " + big_min_size.toString(), value : "left" },
                     { value : "center" }
-                ],
-                baseline : icon ? { value : "middle" } : [
+                ]),
+                baseline : scalable ? (icon ? { value : "middle" } : [
+                    { test : "datum.size * sizeZoom * sizeZoom < " + big_min_size.toString(), value : "top" },
+                    { value : "middle" }
+                ]) : (icon ? { value : "middle" } : [
                     { test : "datum.size < " + big_min_size.toString(), value : "top" },
                     { value : "middle" }
-                ],
-                limit : icon ? { value : 0 } : [
+                ]),
+                limit : scalable ? (icon ? { value : 0 } : [
+                    { test : "datum.size * sizeZoom * sizeZoom < " + big_min_size.toString(), value : 0 },
+                    { signal : "sqrt(datum.size * sizeZoom * sizeZoom) - 5" }
+                ]) : (icon ? { value : 0 } : [
                     { test : "datum.size < " + big_min_size.toString(), value : 0 },
                     { signal : "sqrt(datum.size) - 5" }
-                ],
-                dx : icon ? { value : 0 } : [
+                ]),
+                dx : scalable ? (icon ? { value : 0 } : [
+                    { test : "datum.size * sizeZoom * sizeZoom < " + big_min_size.toString(), signal : "sqrt(datum.size * sizeZoom * sizeZoom) / 2 + 1" },
+                    { value : 0 }
+                ]) : (icon ? { value : 0 } : [
                     { test : "datum.size < " + big_min_size.toString(), signal : "sqrt(datum.size) / 2 + 1" },
                     { value : 0 }
-                ],
-                dy : icon ? { signal : 'sqrt(datum.size) / 2 + 10' } : [
+                ]),
+                dy : scalable ? (icon ? { signal : 'sqrt(datum.size * sizeZoom * sizeZoom) / 2 + 10' } : [
+                    { test : "datum.size * sizeZoom * sizeZoom < " + big_min_size.toString(), signal : "sqrt(datum.size * sizeZoom * sizeZoom) / 2 + 1" },
+                    { value : 0 }
+                ]) : (icon ? { signal : 'sqrt(datum.size) / 2 + 10' } : [
                     { test : "datum.size < " + big_min_size.toString(), signal : "sqrt(datum.size) / 2 + 1" },
                     { value : 0 }
-                ]
+                ])
             }
         }
     });

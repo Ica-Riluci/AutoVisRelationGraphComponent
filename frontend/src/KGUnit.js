@@ -1,6 +1,7 @@
 import React from 'react';
 import { Vega, createClassFromSpec } from 'react-vega';
 import circleunscale from './spec/circle/unscale';
+import circlescale from './spec/circle/scale';
 import { Handler } from 'vega-tooltip';
 import testspec from './spec/_test/test';
 
@@ -15,7 +16,7 @@ export default class KGUnit extends React.Component {
 
     render() {
         var { data, param } = this.state;
-        const specx = circleunscale(param);
+        const specx = circlescale(param);
         console.log("received spec", specx)
         const Spec = createClassFromSpec(specx);
         return (

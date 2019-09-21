@@ -6,10 +6,7 @@ export default function graphSetGen(scalable, big_min_size, icon) {
     if (scalable) {
         ret.push({
             name : "nodes",
-            source : "node_o",
-            transform : [
-                { type : "formula", expr : "datum.size * sizeZoom * sizeZoom", as : "size" }
-            ]
+            source : "node_o"
         });
     } else {
         ret.push({
