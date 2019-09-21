@@ -10,7 +10,7 @@ export default function graphMarkGen(icon, scalable, big_min_size) {
                 enter : {
                     tooltip : { signal : "merge({ title : datum.detail.display_name }, datum.detail)" },
                     fill : icon ? { value : "white" } : { scale : "nodeclr", field : "type" },
-                    stroke : { scale : "nodeclr", field : "type" }
+                    stroke : icon ? { value : "white" } : { scale : "nodeclr", field : "type" }
                 },
                 update : {
                     strokeWidth : scalable ? (icon ? { value : 0} : [
@@ -55,7 +55,7 @@ export default function graphMarkGen(icon, scalable, big_min_size) {
                     xc : { scale : "xscale", field : "x" },
                     yc : { scale : "yscale", field : "y" },
                     fontSize : scalable ? [
-                        { test : "datum.index === nodehover || nodefocus === datum.index", signal : "sqrt(datum.size * sizeZoom * sizeZoom * 0.9"},
+                        { test : "datum.index === nodehover || nodefocus === datum.index", signal : "sqrt(datum.size * sizeZoom * sizeZoom) * 0.9"},
                         { signal : "sqrt(datum.size * sizeZoom * sizeZoom) * 0.8" }
                     ] : [
                         { test : "datum.index === nodehover || nodefocus === datum.index", signal : "sqrt(datum.size) * 0.9" },
