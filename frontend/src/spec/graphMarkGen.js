@@ -9,8 +9,24 @@ export default function graphMarkGen(icon, scalable, big_min_size) {
             encode : {
                 enter : {
                     tooltip : { signal : "merge({ title : datum.detail.display_name }, datum.detail)" },
-                    fill : icon ? { value : "white" } : { scale : "nodeclr", field : "type" },
-                    stroke : icon ? { value : "white" } : { scale : "nodeclr", field : "type" }
+                    fill : icon ? { value : "white" } : [
+                        {             
+                            test : "indexof(domain('nodeclr'), datum.type) >= 0",
+                            scale : "nodeclr",
+                            field : "type"              
+                        },{
+                            value : "black"
+                        }
+                    ],
+                    stroke : icon ? { value : "white" } : [
+                        {             
+                            test : "indexof(domain('nodeclr'), datum.type) >= 0",
+                            scale : "nodeclr",
+                            field : "type"              
+                        },{
+                            value : "black"
+                        }
+                    ]
                 },
                 update : {
                     strokeWidth : scalable ? (icon ? { value : 0} : [
@@ -74,7 +90,15 @@ export default function graphMarkGen(icon, scalable, big_min_size) {
         encode : {
             enter : {
                 tooltip : { signal : "{ title:datum.s.name + '---[' + datum.type + ']-->' + datum.t.name }" },
-                stroke : { scale : "linkclr", field : "type" },
+                stroke : [
+                    {
+                        test : "indexof(domain('linkclr'), datum.type) >= 0",
+                        scale : "linkclr",
+                        field : "type"
+                    },{
+                        value : "black"
+                    }
+                ],
                 strokeWidth : { value : 2 }
             },
             update : {
@@ -99,7 +123,15 @@ export default function graphMarkGen(icon, scalable, big_min_size) {
             enter : {
                 shape : { value : "triangle" },
                 size : { value : 100 },
-                fill : { scale : "linkclr", field : "type" }
+                fill : [
+                    {
+                        test : "indexof(domain('linkclr'), datum.type) >= 0",
+                        scale : "linkclr",
+                        field : "type"
+                    },{
+                        value : "black"
+                    }
+                ]
             },
             update : {
                 opacity :[

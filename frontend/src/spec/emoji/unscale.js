@@ -11,8 +11,8 @@ export default function unscale(param, debug) {
         console.log('canvas parameter', param);
     }
     var graph = specInit(param, true);
-    graph.data = graph.data.concat(graphGen(true, 1600, true), legendSetGen(true));
+    graph.data = graph.data.concat(graphGen(false, 1600, true), legendSetGen(true));
     graph.scales = graph.scales.concat(legendScaleGen(true));
-    graph.marks = graph.marks.concat(graphMarkGen(true, true, 1600)).concat(coverMarkGen(true, true, 1600));
+    graph.marks = graph.marks.concat(graphMarkGen(true, false, 1600)).concat(coverMarkGen(false, true, 1600));
     return graph;
 }

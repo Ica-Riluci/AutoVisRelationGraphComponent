@@ -6,7 +6,13 @@ export default function graphSetGen(scalable, big_min_size, icon) {
     if (scalable) {
         ret.push({
             name : "nodes",
-            source : "node_o"
+            source : "node_o",
+            transform : [
+                {
+                    type : "formula",
+                    expr : "datum.size * layoutZoom * layoutZoom", as : "size"
+                }
+            ]
         });
     } else {
         ret.push({
@@ -33,38 +39,5 @@ export default function graphSetGen(scalable, big_min_size, icon) {
             }
         ]
     });
-    ret.push(
-        {
-            name : "bignodes",
-            source : "nodes",
-            transform : [
-                {
-                    type : "filter",
-                    expr : "datum.size >= " + big_min_size.toString()
-                }
-            ]
-        },{
-            name : "smallnodes",
-            source : "nodes",
-            transform : [
-                {
-                    type : "filter",
-                    expr : "datum.size < " + big_min_size.toString()
-                }
-            ]
-        }
-    );
-    if (icon) {
-        ret.push({
-            name : "iconnodes",
-            source : "nodes",
-            transform : [
-                {
-                    type : "filter",
-                    expr : "indexof(domain('emojiscale'), datum.type) >= 0"
-                }
-            ]
-        });
-    }
     return ret;
 }

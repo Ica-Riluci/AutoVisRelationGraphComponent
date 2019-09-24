@@ -167,6 +167,48 @@ export default function legendSetGen(emoji) {
         transform : [
             { type : "filter", expr : "indata('links', 'type', datum.label)" }
         ]
+    },{
+        name : "new_legends",
+        source : "nodes",
+        transform : [
+            {
+                type : "filter",
+                expr : "!indata('legends', 'label', datum.type)"
+            },{
+                type : "pivot",
+                field : "index",
+                value : "name",
+                groupby : [ "type" ]
+            },{
+                type : "identifier",
+                as : "index"
+            },{
+                type : "formula",
+                expr : "datum.type",
+                as : "label"
+            }
+        ]
+    },{
+        name : "new_llegends",
+        source : "links",
+        transform : [
+            {
+                type : "filter",
+                expr : "!indata('llegends', 'label', datum.type)"
+            },{
+                type : "pivot",
+                field : "index",
+                value : "source",
+                groupby : [ "type" ]
+            },{
+                type : "identifier",
+                as : "index"
+            },{
+                type : "formula",
+                expr : "datum.type",
+                as : "label"
+            }
+        ]
     });
     return ret;
 }

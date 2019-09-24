@@ -15,6 +15,10 @@ export default function specInit(param, icon) {
         },
         signals : [
             {
+                name : "layoutZoom",
+                update : "if(width < 400, width / 400, if(width > 1000, width / 1000, 1))"
+            },
+            {
                 name : "xoffset",
                 update : "-(height + padding.bottom)"
             },{
@@ -167,7 +171,7 @@ export default function specInit(param, icon) {
                 value : null,
                 on : [
                     {
-                        events : "@legendSymbol:click, @legendLabel:click",
+                        events : "@legendSymbol:click, @legendLabel:click, @newLegendSymbol:click, @newLegendLabel:click",
                         update : "{value : datum.label}",
                         force : true
                     }
