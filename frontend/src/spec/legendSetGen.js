@@ -55,7 +55,12 @@ export default function legendSetGen(emoji) {
                 { label : "品牌", value : "#ee3284" },
                 { label : "代理店", value : "#d9aeff" },
                 { label : "服务成本", value : "#123456" },
-                { label : "人", value : "#654321" }
+                { label : "人", value : "#654321" },
+                { label : "服务人员使用车", value : "#123456" },
+                { label : "服务区", value : "#abcdef" },
+                { label : "部件_ty", value : "#ac938d" },
+                { label : "驻点", value : "#984365" },
+                { label : "机型分类", value : "#1029c8" }
             ]
         });
     } else {
@@ -103,7 +108,7 @@ export default function legendSetGen(emoji) {
                 { label : "服务数量", value : "#️⃣" },
                 { label : "终端报警", value : "🚨" },
                 { label : "O2O", value : "🔗" },
-                { label : "挖掘机", value : "🚛" },
+                { label : "挖掘机", value : "🚜" },
                 { label : "服务区", value : "🗺️" },
                 { label : "当前所在地区", value : "📍" },
                 { label : "吨级", value : "⚖️" },
@@ -113,7 +118,12 @@ export default function legendSetGen(emoji) {
                 { label : "品牌", value : "®️" },
                 { label : "代理店", value : "🎩" },
                 { label : "服务成本", value : "💸" },
-                { label : "人", value : "👤" }
+                { label : "人", value : "👤" },
+                { label : "服务人员使用车", value : "🚙" },
+                { label : "服务区", value : "📬" },
+                { label : "部件_ty", value : "🧱" },
+                { label : "驻点", value : "⛺️" },
+                { label : "机型分类", value : "🗄" }
             ]
         });
     }
@@ -159,55 +169,16 @@ export default function legendSetGen(emoji) {
             { label : '处于', value : '#642df9' },
             { label : '来源', value : '#b59a3e' },
             { label : '生成', value : '#57c775' },
-            { label : '执行', value : '#98eb69' }
+            { label : '执行', value : '#98eb69' },
+            { label : "驻扎在", value : "#90087d" },
+            { label : "管辖", value : "#00d234" },
+            { label : "培训过", value : "#7893ff" }
         ]
     },{
         name : "actllegends",
         source : "llegends",
         transform : [
             { type : "filter", expr : "indata('links', 'type', datum.label)" }
-        ]
-    },{
-        name : "new_legends",
-        source : "nodes",
-        transform : [
-            {
-                type : "filter",
-                expr : "!indata('legends', 'label', datum.type)"
-            },{
-                type : "pivot",
-                field : "index",
-                value : "name",
-                groupby : [ "type" ]
-            },{
-                type : "identifier",
-                as : "index"
-            },{
-                type : "formula",
-                expr : "datum.type",
-                as : "label"
-            }
-        ]
-    },{
-        name : "new_llegends",
-        source : "links",
-        transform : [
-            {
-                type : "filter",
-                expr : "!indata('llegends', 'label', datum.type)"
-            },{
-                type : "pivot",
-                field : "index",
-                value : "source",
-                groupby : [ "type" ]
-            },{
-                type : "identifier",
-                as : "index"
-            },{
-                type : "formula",
-                expr : "datum.type",
-                as : "label"
-            }
         ]
     });
     return ret;

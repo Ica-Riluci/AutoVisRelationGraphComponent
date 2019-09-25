@@ -88,27 +88,6 @@ export default function coverMarkGen(scalable, icon, big_min_size) {
                     }
                 }
             },{
-                name : "newLegendLabel",
-                zindex : 100,
-                type : "text",
-                from : { data : "new_legends" },
-                encode : {
-                    enter : {
-                        text : { signal : "'❓ ' + datum.label" },
-                        fontSize : { value : 12 },
-                        limit : { value : 96 },
-                        tooltip : { signal : "datum.label" },
-                        x : { signal : "width - 100" },
-                        y : { signal : "length(domain('actemoji')) * 16 + (datum.index - 1) * 16" }
-                    },
-                    update : {
-                        opacity : [
-                            { test : "!length(data('selected')) || indata('selected', 'value', datum.label)", value : 1 },
-                            { value : 0.15 }
-                        ]
-                    }
-                }
-            },{
                 zindex : 99,
                 name : "linkLegendSymbol",
                 type : "rule",
@@ -135,42 +114,6 @@ export default function coverMarkGen(scalable, icon, big_min_size) {
                         fontSize : { value : 12 },
                         text : { field : "label" },
                         y : { signal : "length(domain('actemoji')) * 16 + 10 + length(data('new_legends')) * 16 + indexof(domain('linkclr'), datum.label) * 16" },
-                        baseline : { value : "middle" },
-                        align : { value : "left" },
-                        limit : { value : 83 },
-                        tooltip : { signal : "datum.label" }
-                    },
-                    update : {
-                        x : { signal : "width - 85" }
-                    }
-                }
-            },{
-                zindex : 99,
-                name : "newLinkLegendSymbol",
-                type : "rule",
-                from : { data : "new_llegends" },
-                encode : {
-                    enter : {
-                        stroke : { value : "black" },
-                        y : { signal : "length(domain('actemoji')) * 16 + 10 + length(domain('linkclr')) * 16 + (datum.index - 1) * 16" },
-                        y2 : { signal : "length(domain('actemoji')) * 16 + 10 + length(domain('linkclr')) * 16 + (datum.index - 1) * 16" },
-                        strokeWidth : { value : 2 },
-                    },
-                    update : {
-                        x : { signal : "width - 98" },
-                        x2 : { signal : "width - 90" }
-                    }
-                }
-            },{
-                zindex : 99,
-                name : "newLinkLegendLabel",
-                type : "text",
-                from : { data : "new_llegends" },
-                encode : {
-                    enter : {
-                        fontSize : { value : 12 },
-                        text : { field : "label" },
-                        y : { signal : "length(domain('actemoji')) * 16 + 10 + length(domain('linkclr')) * 16 + (datum.index - 1) * 16" },
                         baseline : { value : "middle" },
                         align : { value : "left" },
                         limit : { value : 83 },
@@ -228,48 +171,6 @@ export default function coverMarkGen(scalable, icon, big_min_size) {
                     }
                 }
             },{
-                zindex : 100,
-                name : "newLegendSymbol",
-                type : "symbol",
-                from : { data : "new_legends" },
-                encode : {
-                    enter : {
-                        size : { value : 121 },
-                        yc : { signal : "length(domain('nodeclr')) * 16 + datum.index * 16 - 8" },
-                        fill : { value : "black" }
-                    },
-                    update : {
-                        xc : { signal : "width - 94" },
-                        opacity : [
-                           { test : "!length(data('selected')) || indata('selected', 'value', datum.label)", value : 1},
-                           { value : 0.15 }
-                        ],
-                    }
-                }
-            },{
-                zindex : 100,
-                name : "newLegendLabel",
-                type : "text",
-                from : { data : "new_legends" },
-                encode : {
-                    enter : {
-                        fontSize : { value : 12 },
-                        y : { signal : "length(domain('nodeclr')) * 16 + datum.index * 16 - 8" },
-                        baseline : { value : "middle" },
-                        align : { value : "left" },
-                        text : { field : "label" },
-                        limit : { value : 83 },
-                        tooltip : { signal : "datum.label" }
-                    },
-                    update : {
-                        x : { signal : "width - 85" },
-                        opacity : [
-                           { test : "!length(data('selected')) || indata('selected', 'value', datum.label)", value : 1},
-                           { value : 0.15 }
-                        ],
-                    }
-                }
-            },{
                 zindex : 99,
                 name : "linkLegendSymbol",
                 type : "rule",
@@ -296,42 +197,6 @@ export default function coverMarkGen(scalable, icon, big_min_size) {
                         fontSize : { value : 12 },
                         text : { field : "label" },
                         y : { signal : "length(domain('nodeclr')) * 16 + 10 + length(data('new_legends')) * 16 + indexof(domain('linkclr'), datum.label) * 16" },
-                        baseline : { value : "middle" },
-                        align : { value : "left" },
-                        limit : { value : 83 },
-                        tooltip : { signal : "datum.label" }
-                    },
-                    update : {
-                        x : { signal : "width - 85" }
-                    }
-                }
-            },{
-                zindex : 99,
-                name : "newLinkLegendSymbol",
-                type : "rule",
-                from : { data : "new_llegends" },
-                encode : {
-                    enter : {
-                        stroke : { value : "black" },
-                        y : { signal : "length(domain('nodeclr')) * 16 + 10 + length(domain('linkclr')) * 16 + (datum.index - 1) * 16" },
-                        y2 : { signal : "length(domain('nodeclr')) * 16 + 10 + length(domain('linkclr')) * 16 + (datum.index - 1) * 16" },
-                        strokeWidth : { value : 2 },
-                    },
-                    update : {
-                        x : { signal : "width - 98" },
-                        x2 : { signal : "width - 90" }
-                    }
-                }
-            },{
-                zindex : 99,
-                name : "newLinkLegendLabel",
-                type : "text",
-                from : { data : "new_llegends" },
-                encode : {
-                    enter : {
-                        fontSize : { value : 12 },
-                        text : { field : "label" },
-                        y : { signal : "length(domain('nodeclr')) * 16 + 10 + length(domain('linkclr')) * 16 + (datum.index - 1) * 16" },
                         baseline : { value : "middle" },
                         align : { value : "left" },
                         limit : { value : 83 },

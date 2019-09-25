@@ -18,7 +18,7 @@ export default class KGUnit extends React.Component {
 
     render() {
         var { data, param } = this.state;
-        const specx = emojiunscale(param);
+        const specx = emojiscale(param);
         console.log("received spec", specx)
         const Spec = createClassFromSpec(specx);
         return (

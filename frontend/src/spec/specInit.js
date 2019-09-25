@@ -123,7 +123,7 @@ export default function specInit(param, icon) {
                         events : icon ? "@nodelabel:mouseover, @iconnode:mouseover" :"@nodelabel:mouseover, @node:mouseover",
                         update : "datum.index"
                     },{
-                        events : icon ? "nodelabel:mouseout, @iconnode:mouseout" : "@nodelabel:mouseout, @node:mouseout",
+                        events : icon ? "@nodelabel:mouseout, @iconnode:mouseout" : "@nodelabel:mouseout, @node:mouseout",
                         update : "null"
                     }
                 ]
@@ -161,7 +161,7 @@ export default function specInit(param, icon) {
                 value : false,
                 on : [
                     {
-                        events : "@legendSymbol:click, @legendLabel:click",
+                        events : "@legendSymbol:click, @legendLabel:click, @newLegendSymbol:click, @newLegendLabel:click",
                         update : "event.shiftKey",
                         force : true
                     }
